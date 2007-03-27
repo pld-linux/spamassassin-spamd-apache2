@@ -1,0 +1,129 @@
+#!/bin/sh
+#
+# spamd-apache2	Apache2 version of spamd from the SpamAssassin project
+#
+# chkconfig:	345 81 29
+#
+# description:	Apache2 version of spamd from the SpamAssassin project
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Set defaults
+#SA2_CONFIG=/etc/spamd-apache2.conf
+SA2_MPM=/usr/sbin/httpd.prefork
+SA2_PID=/var/run/spamd-apache2.pid
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/spamd-apache2 ] && . /etc/sysconfig/spamd-apache2
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down spamd-apache2
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+start() {
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/spamd-apache2 ]; then
+		msg_starting spamd-apache2
+		if [ -n "$SA2_CONFIG" ]; then
+			$SA2_MPM -f $SA2_CONFIG -d / -k start
+		else
+			apache-spamd.pl -k start --httpd-path $SA2_MPM --pidfile $SA2_PID $SA2_OPTS
+		fi
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			touch /var/lock/subsys/spamd-apache2
+			log_success "$1 startup"
+			ok
+		else
+			fail
+			log_failed "$1 startup"
+		fi
+	else
+		msg_already_running spamd-apache2
+	fi
+}
+
+stop() {
+	if [ -f /var/lock/subsys/spamd-apache2 ]; then
+		# Stop daemons.
+		msg_stopping spamd-apache2
+		if [ -n "$SA2_CONFIG" ]; then
+			$SA2_MPM -f $SA2_CONFIG -d / -k stop
+		else
+			apache-spamd.pl -k stop  --httpd-path $SA2_MPM --pidfile $SA2_PID $SA2_OPTS
+		fi
+		#killproc spamd-apache2
+		if [ $RETVAL -eq 0 ]; then
+			touch /var/lock/subsys/spamd-apache2
+			log_success "$1 startup"
+			ok
+		else
+			fail
+			log_failed "$1 startup"
+		fi
+		rm -f /var/lock/subsys/spamd-apache2
+	else
+		msg_not_running spamd-apache2
+	fi
+}
+
+#reload() {
+#	if [ -f /var/lock/subsys/spamd-apache2 ]; then
+#		msg_reloading spamd-apache2
+#		killproc spamd-apache2 -HUP
+#		RETVAL=$?
+#	else
+#		msg_not_running spamd-apache2
+#		RETVAL=7
+#	fi
+#}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+	stop
+	start
+	exit $?
+	;;
+#  reload)
+#  	reload
+#	;;
+#  force-reload)
+#	# if program allows reloading without stopping
+#	reload
+#
+#	# or if it doesn't
+#	stop
+#	start
+#	;;
+  status)
+	status spamd-apache2
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# vi:syntax=sh

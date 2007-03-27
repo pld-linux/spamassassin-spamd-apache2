@@ -1,0 +1,16 @@
+
+# prefork suggested
+SA2_MPM=/usr/sbin/httpd.prefork
+
+# config file location; you need to generate it first with
+# apache-spamd.pl --httpd_conf=/etc/spamd-apache2.conf
+#SA2_CONFIG=/etc/spamd-apache2.conf
+
+# this won't be used if you define SA2_CONFIG
+SA2_OPTS="-H /tmp -u nobody"
+
+SA2_PID=/var/run/spamd-apache2.pid
+
+# Define nice level
+SERVICE_RUN_NICE_LEVEL="+0"
+
