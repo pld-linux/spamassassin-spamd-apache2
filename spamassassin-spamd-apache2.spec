@@ -42,7 +42,11 @@ in Apache2.  It's mostly compatible with the original spamd.
 	INSTALLDIRS=vendor
 %{__make}
 
-%{?with_tests:%{__make} test}
+%if %{with tests}
+%{__make} test \
+	APACHE_TEST_HTTPD=%{_sbindir}/httpd.prefork \
+	APACHE_TEST_APXS=%{apxs}
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
