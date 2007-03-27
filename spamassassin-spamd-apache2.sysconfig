@@ -7,7 +7,7 @@ SA2_MPM=/usr/sbin/httpd.prefork
 #SA2_CONFIG=/etc/spamd-apache2.conf
 
 # this won't be used if you define SA2_CONFIG
-SA2_OPTS="-H /tmp -u nobody"
+SA2_OPTS="-H /tmp -u nobody -x"
 
 SA2_PID=/var/run/spamd-apache2.pid
 
