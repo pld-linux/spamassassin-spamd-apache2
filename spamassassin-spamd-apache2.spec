@@ -31,8 +31,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This distribution contains a mod_perl2 module, implementing the spamd
-protocol from the SpamAssassin (http://spamassassin.apache.org/) project
-in Apache2.  It's mostly compatible with the original spamd.
+protocol from the SpamAssassin (http://spamassassin.apache.org/)
+project in Apache2. It's mostly compatible with the original spamd.
+
+%description -l pl.UTF-8
+Ten pakiet zawiera moduł mod_perl2, implementujący protokół spamd z
+projektu SpamAssassin (http://spamassassin.apache.org/) dla Apache'a
+2. Jest w większości kompatybilny z oryginalnym spamd.
 
 %prep
 %setup -q -n spamd-apache2-%{version}
@@ -83,4 +88,5 @@ fi
 
 %attr(754,root,root) /etc/rc.d/init.d/spamd-apache2
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/spamd-apache2
+# XXX: ghost or config?
 %ghost %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
