@@ -23,8 +23,8 @@ BuildRequires:	apache-mod_perl >= 1:2
 BuildRequires:	perl-Apache-Test >= 1:1.29
 BuildRequires:	perl-Mail-SpamAssassin >= 3.001
 BuildRequires:	perl-devel >= 1:5.8.0
-BuildRequires:	rpmbuild(macros) >= 1.310
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.310
 %if %{with tests}
 BuildRequires:	apache-base
 %endif
@@ -64,7 +64,7 @@ install -d $RPM_BUILD_ROOT{/etc/{sysconfig,rc.d/init.d},%{_sysconfdir}/mail/spam
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/spamd-apache2
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/spamd-apache2
-sed -e 's,/usr/lib,%{_libdir},' %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
+sed -e 's,/''usr/lib,%{_libdir},' %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
