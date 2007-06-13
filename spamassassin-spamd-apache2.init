@@ -52,11 +52,7 @@ stop() {
 	if [ -f /var/lock/subsys/spamd-apache2 ]; then
 		# Stop daemons.
 		msg_stopping spamd-apache2
-		if [ -n "$SA2_CONFIG" ]; then
-			$SA2_MPM -f $SA2_CONFIG -d / -k stop
-		else
-			apache-spamd.pl -k stop  --httpd-path $SA2_MPM --pidfile $SA2_PID $SA2_OPTS
-		fi
+		killproc --pidfile httpd.pid $SA2_MPM
 		rm -f /var/lock/subsys/spamd-apache2
 	else
 		msg_not_running spamd-apache2
