@@ -9,7 +9,7 @@ Summary:	spamd-apache2 - daemonized version of spamassassin as Apache2 module
 Summary(pl.UTF-8):	spamd-apache2 - spamassassin w postaci demona jako moduł Apache2
 Name:		spamassassin-spamd-apache2
 Version:	3.1.8
-Release:	0.3
+Release:	0.4
 License:	Apache Software License v2
 Group:		Applications/Mail
 Source0:	http://www.fnord.pl/spamd-apache2-%{version}.tar.bz2
@@ -64,7 +64,7 @@ install -d $RPM_BUILD_ROOT{/etc/{sysconfig,rc.d/init.d},%{_sysconfdir}/mail/spam
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/spamd-apache2
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/spamd-apache2
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
+sed -e 's,/usr/lib,%{_libdir},' %{SOURCE3} > $RPM_BUILD_ROOT%{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
