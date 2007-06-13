@@ -4,11 +4,12 @@
 #
 %include	/usr/lib/rpm/macros.perl
 %define	apxs	%{sbindir}/apxs
+%define	pdir	Mail/SpamAssassin/Spamd/Apache2
 Summary:	spamd-apache2 - daemonized version of spamassassin as Apache2 module
 Summary(pl.UTF-8):	spamd-apache2 - spamassassin w postaci demona jako moduł Apache2
 Name:		spamassassin-spamd-apache2
 Version:	3.1.8
-Release:	0.1
+Release:	0.2
 License:	Apache Software License v2
 Group:		Applications/Mail
 Source0:	http://www.fnord.pl/spamd-apache2-%{version}.tar.bz2
@@ -80,13 +81,11 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README.apache
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/spamd-apache2
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
+%attr(754,root,root) /etc/rc.d/init.d/spamd-apache2
 %attr(755,root,root) %{_bindir}/*
 %{perl_vendorlib}/Mail/SpamAssassin/*.pm
 %{perl_vendorlib}/Mail/SpamAssassin/Spamd
 %{_mandir}/man1/*
 %{_mandir}/man3/*
-
-%attr(754,root,root) /etc/rc.d/init.d/spamd-apache2
-%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/spamd-apache2
-# XXX: ghost or config?
-%ghost %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mail/spamassassin/spamd-apache2.conf
