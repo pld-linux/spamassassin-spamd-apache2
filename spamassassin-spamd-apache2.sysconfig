@@ -7,7 +7,7 @@ SERVICE_RUN_NICE_LEVEL="+0"
 SA2_MPM=/usr/sbin/httpd.prefork
 
 # config file location; you need to generate it first with
-# apache-spamd.pl --httpd_conf=/etc/mail/spamassassin/spamd-apache2.conf
+# apache-spamd.pl --httpd_conf=/etc/mail/spamassassin/spamd-apache2.conf --pidfile /var/run/spamd-apache2.pid
 SA2_CONFIG=/etc/mail/spamassassin/spamd-apache2.conf
 
 # this won't be used if you define SA2_CONFIG
