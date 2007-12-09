@@ -18,7 +18,7 @@ Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Source3:	spamd-apache2.conf
 URL:		http://spamassassin.apache.org/
-BuildRequires:	apache-apxs
+BuildRequires:	%{apxs}
 BuildRequires:	apache-mod_perl >= 1:2
 BuildRequires:	perl-Apache-Test >= 1:1.29
 BuildRequires:	perl-Mail-SpamAssassin >= 3.001
