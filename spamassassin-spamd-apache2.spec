@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	spamd-apache2 - spamassassin w postaci demona jako moduł Apa
 Name:		spamassassin-spamd-apache2
 Version:	3.1.8
 Release:	0.4
-License:	Apache Software License v2
+License:	Apache v2.0
 Group:		Applications/Mail
 Source0:	http://www.fnord.pl/spamd-apache2-%{version}.tar.bz2
 # Source0-md5:	9f7724390e81a44877f2d980461bdee8
