@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	tests		# perform "make test"
 #
-%include	/usr/lib/rpm/macros.perl
 %define	apxs	%{sbindir}/apxs
 %define	pdir	Mail/SpamAssassin/Spamd/Apache2
 Summary:	spamd-apache2 - daemonized version of spamassassin as Apache2 module
